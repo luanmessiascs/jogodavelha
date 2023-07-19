@@ -1,0 +1,42 @@
+body {
+    background-color: rgb(10, 200, 10);
+}
+
+h1 {
+    text-align: center;
+}
+
+div#board {
+    padding-top: 6vh;
+    margin: auto;
+    width: 252px;
+}
+
+div#board div {
+    height: 55px;
+    width: 80px;
+    padding-top: 25px;
+    border: 2px solid #000;
+    float: left;
+    text-align: center;
+    font-size: 30px;
+}
+
+
+/*
+button {
+    /* position: absolute;
+    /* display: block;
+    opacity: 1;
+    height: 50px;
+    width: 50px;
+    margin-top: 30px;
+    margin-left: 480px;
+}
+
+button img {
+    height: 30px;
+    width: 30px;
+    margin-top: 5px;
+}
+*/
