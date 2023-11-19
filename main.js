@@ -1,9 +1,11 @@
 const player1 = 'X'
 const player2 = 'O'
+var winner = ''
 var playTime = player1
 var gameOver = false
 var spaces = {}
 
+var restartbutton = document.getElementById('restart')
 const board = document.querySelector('#board')
     .querySelectorAll('div')
 
@@ -12,45 +14,48 @@ for (let i = 0; i < board.length; i++) {
     spaces[board[i].id] = board[i].innerHTML
 }
 
-// startGame = () {
-//     . . .
-// }
-
 updateShower = () => {
-    if (playTime == player1) {
-        document.querySelector('h1').innerHTML = `Vez do Jogador: ${player2}`
-        playTime = player2
+    let shower = document.querySelector('h1')
+
+    if (playTime === player1) {
+        shower.innerHTML = `Vez do Jogador: ${player1}`
     } else {
-        document.querySelector('h1').innerHTML = `Vez do Jogador: ${player1}`
-        playTime = player1
+        shower.innerHTML = `Vez do Jogador: ${player2}`
     }
 }
 
-for (let i = 0; i < Object.keys(spaces).length; i++) {
-    board[i].addEventListener('click', () => {
-        if (gameOver === false) {
-            // let space = board[i]
-            if (board[i].innerHTML === '') {
-                if (playTime == player1) {
-                    board[i].innerHTML = player1
-                    board[i].style.color = 'red'
-                    spaces[board[i].id] = player1
-                } else {
-                    board[i].innerHTML = player2
-                    spaces[board[i].id] = player2
-                    board[i].style.color = 'blue'
-                }
+startGame = () => {
+    for (let i = 0; i < Object.keys(spaces).length; i++) {
+        board[i].addEventListener('click', () => {
+            if (gameOver === false) {
+                if (board[i].innerHTML === '') {
+                    if (playTime === player1) {
+                        board[i].innerHTML = player1
+                        spaces[board[i].id] = player1
+                        board[i].style.color = 'red'
     
-                updateShower()
+                        playTime = player2
+                    } else {
+                        board[i].innerHTML = player2
+                        spaces[board[i].id] = player2
+                        board[i].style.color = 'blue'
+    
+                        playTime = player1
+                    }
+    
+                    updateShower()
+                }
+                
+                verifyWinner()
             }
-            
-            verifyWinner()
-        }
-    })
+        })
+    }    
 }
 
+updateShower()
+startGame()
+
 verifyWinner = () => {
-    winner = ''
     if (gameOver === false && winner === '') {
         if (
             ((spaces.a1 === spaces.a2 && spaces.a1 === spaces.a3) ||
@@ -77,18 +82,23 @@ verifyWinner = () => {
         setTimeout(() => {
             alert(`O Vencedor foi o jogador: ${winner}`)
         }, 50)
-    } else {
-        console.log('a')
+    
+        restartbutton.style.opacity = 1
+        restartbutton.addEventListener('click', () => {
+            restart()
+        })
     }
 }
 
-// QUANDO REINICIA, O JOGO AINDA CONTA UM VENCEDOR . . .
-
 restart = () => {
     playTime = player1
-    spaces = {}
     gameOver = false
+    winner = ''
     for (let i = 0; i < board.length; i++) {
         board[i].innerHTML = ''
+        spaces[board[i].id] = board[i].innerHTML
     }
+
+    updateShower()
+    restartbutton.style.opacity = 0
 }
